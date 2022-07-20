@@ -18,12 +18,12 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		</oauth2-provider:client-validation-rate-limiter>
 		<oauth2-provider:token-config tokenStore="token_objectStore" tokenTtl="120"/>
 	</oauth2-provider:config>
-	<flow name="oauth-testFlow" doc:id="130e436e-49ce-44ed-9bea-23532a61e11f" >
+	<flow name="create-client-flow" doc:id="130e436e-49ce-44ed-9bea-23532a61e11f" >
 		<http:listener doc:name="Listener" doc:id="1d820b8e-a34b-4a45-b33b-27093c08ceda" config-ref="HTTP_Listener_config" path="/createClient"/>
 		<oauth2-provider:create-client doc:name="Create client" doc:id="07ab5e2a-4177-483c-8d02-5afcef9dc39f" config-ref="OAuth2_Provider_Config" clientId="#[attributes.headers.client_id]" type="CONFIDENTIAL" secret="#[attributes.headers.client_secret]" clientName='#[attributes.headers.client_name]' description='#[""]' principal='#[""]' redirectUris='#[[]]' authorizedGrantTypes='#[["CLIENT_CREDENTIALS"]]' scopes="#[[]]" failIfPresent="true"/>
 		<set-payload value='#["Client created successfully"]' doc:name="Set Payload" doc:id="a38001a9-8eb5-48a1-8878-f5035aa431b0" />
 	</flow>
-	<flow name="oauth-testFlow1" doc:id="02ec97cf-2825-40cf-80f6-d1fc57c644c6" >
+	<flow name="validate-token-flow" doc:id="02ec97cf-2825-40cf-80f6-d1fc57c644c6" >
 		<http:listener doc:name="Listener" doc:id="3b246b13-0ffb-4604-aad3-874709bd811f" config-ref="HTTP_Listener_config" path="/validate"/>
 		<oauth2-provider:validate-token doc:name="Validate token" doc:id="55f19a59-d6cf-4941-94e9-72933fd35be4" config-ref="OAuth2_Provider_Config" scopes="#[[]]"/>
 		<ee:transform doc:name="Transform Message" doc:id="58492e26-0a15-44ff-9615-f02a6b11835a" >
